@@ -24,6 +24,7 @@ after_script:
   - git add .
   - git commit -m ":construction_worker:- Build & Deploy by Travis CI"
   - git push --force --quiet "https://${GH_TOKEN}@${GH_REPO}" master:master
+  - rm -rf .temp
 
 branches:
   only:
