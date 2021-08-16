@@ -1,0 +1,30 @@
+language: node_js
+
+node_js: "12.18.1"
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - npm i
+
+script:
+  - cp -r src/ dist/
+
+after_script:
+  - git clone https://github.com/xunjianxiang/ngx-formly-antd.github.io .temp
+  - cd .temp
+  - git checkout master
+  - cd ../
+  - mv .temp/.git dist
+  - cd dist
+  - git config user.name "${USER_NAME}"
+  - git config user.email "${USER_EMAIL}"
+  - git add .
+  - git commit -m ":construction_worker:- Build & Deploy by Travis CI"
+  - git push --force --quiet "https://${GH_TOKEN}@${GH_REPO}" master:master
+
+branches:
+  only:
+    - master
